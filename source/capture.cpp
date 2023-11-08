@@ -2,15 +2,15 @@
 
 Capture::Capture()
 {
-    display = XOpenDisplay(NULL);
+    display = gdk_display_open(NULL);
     if (display == NULL)
     {
-        std::cout << "Failed to get display" << std::endl;
+        std::cout << "Failed to get display." << std::endl;
         exit(1);
     }
 }
 
 Capture::~Capture()
 {
-    XCloseDisplay(display);
+    gdk_display_close(display);
 }

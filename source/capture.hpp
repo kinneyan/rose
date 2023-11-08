@@ -1,17 +1,16 @@
 #pragma once
 
 #include <iostream>
-#include <X11/Xlib.h>
+#include <gdk/gdk.h>
 
 class Capture
 {
 
 private:
-    Display* display;
+    GdkDisplay* display;
 
 public:
     Capture();
     ~Capture();
-
-
+    
 };
