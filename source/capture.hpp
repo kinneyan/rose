@@ -1,5 +1,4 @@
-#ifndef CAPTURE_HPP
-#define CAPTURE_HPP
+#pragma once
 
 #include <iostream>
 #include <X11/Xlib.h>
@@ -16,5 +15,3 @@ public:
 
 
 };
-
-#endif
