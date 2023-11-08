@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -Wall
-LIBS =
+LIBS = -lX11
 SOURCES = $(wildcard source/*.cpp)
 OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
 EXECUTABLE = bin/rose
