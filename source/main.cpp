@@ -3,5 +3,6 @@
 
 int main()
 {
+    Capture capture;
     return 0;
 }
