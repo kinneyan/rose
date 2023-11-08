@@ -3,7 +3,7 @@ CFLAGS = -Wall
 LIBS =
 SOURCES = $(wildcard source/*.cpp)
 OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
-EXECUTABLE = bin/bean
+EXECUTABLE = bin/rose
 
 all:	build $(EXECUTABLE)
 
