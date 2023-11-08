@@ -2,13 +2,12 @@
 #define CAPTURE_HPP
 
 #include <iostream>
-#include <gdk/gdkx.h>
+#include <gdk/gdk.h>
 
 class Capture
 {
 
 private:
-
 
 public:
     Capture();

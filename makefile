@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = `pkg-config --cflags gtk+-3.0`
-LIBS = `pkg-config --libs gtk+-3.0`
+CFLAGS = `pkg-config --cflags gtk4`
+LIBS = `pkg-config --libs gtk4`
 SOURCES = $(wildcard source/*.cpp)
 OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
 EXECUTABLE = bin/rose
