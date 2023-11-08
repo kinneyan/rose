@@ -8,11 +8,12 @@ class Capture
 {
 
 private:
+    GdkDisplay* display;
 
 public:
     Capture();
-
-
+    ~Capture();
+    
 };
 
 #endif
