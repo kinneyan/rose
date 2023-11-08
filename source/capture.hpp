@@ -2,17 +2,16 @@
 #define CAPTURE_HPP
 
 #include <iostream>
-#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
 
 class Capture
 {
 
 private:
-    Display* display;
+
 
 public:
     Capture();
-    ~Capture();
 
 
 };
