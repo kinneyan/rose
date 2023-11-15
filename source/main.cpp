@@ -3,6 +3,6 @@
 
 int main(int argc, char** argv)
 {
-    Rose app(argc, argv);
-    return 0;
+    Rose app;
+    return app.run(argc, argv);
 }

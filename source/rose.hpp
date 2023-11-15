@@ -9,6 +9,7 @@ private:
     void readOptions(int argc, char** argv);
 
 public:
-    Rose(int argc, char** argv);
+    Rose();
+    int run(int argc, char** argv);
 
 };
