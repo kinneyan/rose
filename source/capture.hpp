@@ -11,7 +11,7 @@ private:
     Display* display;
     Window root;
     Visual* visual;
-    std::filesystem::path screenshotPath = "/screenshots/test.png";
+    std::filesystem::path screenshotPath = "screenshots/test.png";
 
     void screenshotRegion(int x, int y, int w, int h, std::filesystem::path path);
 
