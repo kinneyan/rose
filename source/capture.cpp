@@ -1,4 +1,6 @@
 #include "capture.hpp"
+
+#include <cairo-xlib.h>
 #include <iostream>
 
 Capture::Capture()
