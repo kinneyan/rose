@@ -6,7 +6,7 @@ private:
     bool areaSelection;
     bool noUpload;
 
-    void readOptions(int argc, char** argv);
+    int readOptions(int argc, char** argv);
 
 public:
     Rose();
