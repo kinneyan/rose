@@ -1,5 +1,6 @@
 #include "capture.hpp"
 #include <iostream>
+#include <time.h>
 
 Capture::Capture()
 {
@@ -21,6 +22,14 @@ Capture::~Capture()
 std::filesystem::path Capture::buildPath()
 {
     std::filesystem::path path;
+
+    time_t currTime = time(NULL);
+    static const int bufferSize = 80;
+    char buf[bufferSize];
+    strftime(buf, bufferSize, "ScreenshotAt-%Y-%m-%d_%H-%M-%S", localtime(&currTime));
+
+    path = buf;
+    path.operator+=(fileType);
 
     return path;
 }
@@ -48,7 +57,9 @@ void Capture::screenshot()
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, screenshotPath);
+    std::filesystem::path path = screenshotPath.operator/=(buildPath());
+
+    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, path);
 }
 
 void Capture::screenshot(int x, int y, int w, int h)
@@ -60,7 +71,9 @@ void Capture::screenshot(int x, int y, int w, int h)
     xwc.height = h;
     XConfigureWindow(display, root, CWX | CWY | CWWidth | CWHeight, &xwc);
 
-    screenshotRegion(x, y, w, h, screenshotPath);
+    std::filesystem::path path = screenshotPath.operator+=(buildPath());
+
+    screenshotRegion(x, y, w, h, path);
 }
 
 void Capture::screenshot(int w, int h)
@@ -70,5 +83,7 @@ void Capture::screenshot(int w, int h)
     xwc.height = h;
     XConfigureWindow(display, root, CWWidth | CWHeight, &xwc);
 
-    screenshotRegion(0, 0, w, h, screenshotPath);
+    std::filesystem::path path = screenshotPath.operator+=(buildPath());
+
+    screenshotRegion(0, 0, w, h, path);
 }
