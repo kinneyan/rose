@@ -15,6 +15,20 @@ int Rose::run(int argc, char**argv)
 {
     if (readOptions(argc, argv) != 0)
         return 1;
+
+    Capture capture;
+
+    if (fullScreen)
+    {
+        capture.screenshot();
+    }
+
+    if (areaSelection)
+    {
+        //get area selection
+        //capture.screenshot(x, y, w, h);
+    }
+    
     return 0;
 }
 
