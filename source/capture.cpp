@@ -39,3 +39,13 @@ void Capture::screenshot()
 
     screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, screenshotPath);
 }
+
+void screenshot(int x, int y, int w, int h)
+{
+    screenshot_region(x, y, w, h, screenshotPath);
+}
+
+void screenshot(int w, int h)
+{
+    screenshot_region(0, 0, w, h, screenshotPath);
+}
