@@ -13,6 +13,7 @@ private:
     Visual* visual;
     std::filesystem::path screenshotPath = "screenshots/test.png";
 
+    std::filesystem::path buildPath();
     void screenshotRegion(int x, int y, int w, int h, std::filesystem::path path);
 
 public:

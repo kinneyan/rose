@@ -18,6 +18,13 @@ Capture::~Capture()
     XCloseDisplay(display);
 }
 
+std::filesystem::path Capture::buildPath()
+{
+    std::filesystem::path path;
+
+    return path;
+}
+
 void Capture::screenshotRegion(int x, int y, int w, int h, std::filesystem::path path)
 {
     if (!std::filesystem::is_directory(screenshotPath.parent_path()))
