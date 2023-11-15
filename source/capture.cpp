@@ -1,34 +1,40 @@
 #include "capture.hpp"
+#include <iostream>
 
 Capture::Capture()
 {
-    screenshot();
-}
-
-void Capture::screenshot()
-{
-    Display* display;
-    Window root;
-    cairo_surface_t* surface;
-
     display = XOpenDisplay(NULL);
     if (display == NULL)
     {
         std::cout << "Display could not be retrieved..." << std::endl;
         exit(1);
     }
-
     root = XDefaultRootWindow(display);
+    visual = XDefaultVisual(display, XDefaultScreen(display));
+}
 
+Capture::~Capture()
+{
+    XCloseDisplay(display);
+}
+
+void Capture::screenshotRegion(int x, int y, int w, int h, char* fname)
+{
+    cairo_surface_t* surface = cairo_xlib_surface_create(display,
+                                                        root,
+                                                        visual,
+                                                        w,
+                                                        h);
+
+    cairo_surface_write_to_png(surface, fname);
+
+    cairo_surface_destroy(surface);
+}
+
+void Capture::screenshot()
+{
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    Visual* visual = XDefaultVisual(display, XDefaultScreen(display));
-
-    surface = cairo_xlib_surface_create(display, root, visual, windowAttributes.width, windowAttributes.height);
-
-    cairo_surface_write_to_png(surface, "screenshot.png");
-
-    cairo_surface_destroy(surface);
-    XCloseDisplay(display);
+    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, "screenshot.png");
 }
