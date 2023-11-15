@@ -2,6 +2,7 @@
 
 #include <X11/Xlib.h>
 #include <cairo-xlib.h>
+#include <filesystem>
 
 class Capture
 {
@@ -10,8 +11,9 @@ private:
     Display* display;
     Window root;
     Visual* visual;
+    std::filesystem::path screenshotPath = "/screenshots/test.png";
 
-    void screenshotRegion(int x, int y, int w, int h, char* fname);
+    void screenshotRegion(int x, int y, int w, int h, std::filesystem::path path);
 
 public:
     Capture();

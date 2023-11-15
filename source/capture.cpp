@@ -18,15 +18,16 @@ Capture::~Capture()
     XCloseDisplay(display);
 }
 
-void Capture::screenshotRegion(int x, int y, int w, int h, char* fname)
+void Capture::screenshotRegion(int x, int y, int w, int h, std::filesystem::path path)
 {
+
     cairo_surface_t* surface = cairo_xlib_surface_create(display,
                                                         root,
                                                         visual,
                                                         w,
                                                         h);
 
-    cairo_surface_write_to_png(surface, fname);
+    cairo_surface_write_to_png(surface, path.filename().string().c_str());
 
     cairo_surface_destroy(surface);
 }
@@ -36,5 +37,5 @@ void Capture::screenshot()
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, "screenshot.png");
+    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, screenshotPath);
 }
