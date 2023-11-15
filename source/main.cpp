@@ -4,5 +4,6 @@
 int main()
 {
     Capture capture;
+    capture.screenshot();
     return 0;
 }
