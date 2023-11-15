@@ -14,8 +14,8 @@ private:
     std::filesystem::path screenshotPath = "screenshots/";
     std::filesystem::path fileType = ".png";
 
-    std::filesystem::path buildPath();
-    void screenshotRegion(int x, int y, int w, int h, std::filesystem::path path);
+    void buildPath();
+    void screenshotRegion(int x, int y, int w, int h);
 
 public:
     Capture();

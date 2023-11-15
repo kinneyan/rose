@@ -19,7 +19,7 @@ Capture::~Capture()
     XCloseDisplay(display);
 }
 
-std::filesystem::path Capture::buildPath()
+void Capture::buildPath()
 {
     std::filesystem::path path;
 
@@ -31,11 +31,13 @@ std::filesystem::path Capture::buildPath()
     path = buf;
     path.operator+=(fileType);
 
-    return path;
+    screenshotPath.replace_filename(path);
 }
 
-void Capture::screenshotRegion(int x, int y, int w, int h, std::filesystem::path path)
+void Capture::screenshotRegion(int x, int y, int w, int h)
 {
+    buildPath();
+
     if (!std::filesystem::is_directory(screenshotPath.parent_path()))
     {
         std::filesystem::create_directory(screenshotPath.parent_path());
@@ -47,7 +49,7 @@ void Capture::screenshotRegion(int x, int y, int w, int h, std::filesystem::path
                                                         w,
                                                         h);
 
-    cairo_surface_write_to_png(surface, path.string().c_str());
+    cairo_surface_write_to_png(surface, screenshotPath.string().c_str());
 
     cairo_surface_destroy(surface);
 }
@@ -57,9 +59,7 @@ void Capture::screenshot()
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    std::filesystem::path path = screenshotPath.operator/=(buildPath());
-
-    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height, path);
+    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height);
 }
 
 void Capture::screenshot(int x, int y, int w, int h)
@@ -71,9 +71,7 @@ void Capture::screenshot(int x, int y, int w, int h)
     xwc.height = h;
     XConfigureWindow(display, root, CWX | CWY | CWWidth | CWHeight, &xwc);
 
-    std::filesystem::path path = screenshotPath.operator+=(buildPath());
-
-    screenshotRegion(x, y, w, h, path);
+    screenshotRegion(x, y, w, h);
 }
 
 void Capture::screenshot(int w, int h)
@@ -83,7 +81,5 @@ void Capture::screenshot(int w, int h)
     xwc.height = h;
     XConfigureWindow(display, root, CWWidth | CWHeight, &xwc);
 
-    std::filesystem::path path = screenshotPath.operator+=(buildPath());
-
-    screenshotRegion(0, 0, w, h, path);
+    screenshotRegion(0, 0, w, h);
 }
