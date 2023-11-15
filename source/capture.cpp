@@ -18,15 +18,13 @@ void Capture::screenshot()
         exit(1);
     }
 
-    root = DefaultRootWindow(display);
+    root = XDefaultRootWindow(display);
 
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
-    //std::cout << windowAttributes.width << 'x' << windowAttributes.height << std::endl;
 
-    Visual* visual = DefaultVisual(display, DefaultScreen(display));
+    Visual* visual = XDefaultVisual(display, XDefaultScreen(display));
 
-    //XImage* image = XGetImage(display, root, 0, 0, windowAttributes.width, windowAttributes.height, AllPlanes, ZPixmap);
     surface = cairo_xlib_surface_create(display, root, visual, windowAttributes.width, windowAttributes.height);
 
     cairo_surface_write_to_png(surface, "screenshot.png");
