@@ -54,5 +54,10 @@ void Capture::screenshot(int x, int y, int w, int h)
 
 void Capture::screenshot(int w, int h)
 {
+    XWindowChanges xwc;
+    xwc.width = w;
+    xwc.height = h;
+    XConfigureWindow(display, root, CWWidth | CWHeight, &xwc);
+
     screenshotRegion(0, 0, w, h, screenshotPath);
 }
