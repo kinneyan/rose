@@ -2,15 +2,33 @@
 
 Capture::Capture()
 {
-    display = gdk_display_open(NULL);
-    if (display == NULL)
-    {
-        std::cout << "Failed to get display." << std::endl;
-        exit(1);
-    }
+    screenshot();
 }
 
-Capture::~Capture()
+void Capture::screenshot()
 {
-    gdk_display_close(display);
+    Display* display;
+    Window root;
+    cairo_surface_t* surface;
+
+    display = XOpenDisplay(NULL);
+    if (display == NULL)
+    {
+        std::cout << "Display could not be retrieved..." << std::endl;
+        exit(1);
+    }
+
+    root = XDefaultRootWindow(display);
+
+    XWindowAttributes windowAttributes;
+    XGetWindowAttributes(display, root, &windowAttributes);
+
+    Visual* visual = XDefaultVisual(display, XDefaultScreen(display));
+
+    surface = cairo_xlib_surface_create(display, root, visual, windowAttributes.width, windowAttributes.height);
+
+    cairo_surface_write_to_png(surface, "screenshot.png");
+
+    cairo_surface_destroy(surface);
+    XCloseDisplay(display);
 }
