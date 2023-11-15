@@ -20,10 +20,9 @@ Capture::~Capture()
 
 void Capture::screenshotRegion(int x, int y, int w, int h, std::filesystem::path path)
 {
-
-    if (std::filesystem::create_directory(screenshotPath.parent_path()))
+    if (!std::filesystem::is_directory(screenshotPath.parent_path()))
     {
-        std::cout << true << '\n';
+        std::filesystem::create_directory(screenshotPath.parent_path());
     }
 
     cairo_surface_t* surface = cairo_xlib_surface_create(display,
