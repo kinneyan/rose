@@ -10,8 +10,8 @@ private:
     Display* display;
     Window root;
     Visual* visual;
-    std::filesystem::path screenshotPath = "screenshots/";
-    std::filesystem::path fileType = ".png";
+    std::filesystem::path screenshotPath;
+    std::filesystem::path fileType;
 
     void buildPath();
     void screenshotRegion(int x, int y, int w, int h);

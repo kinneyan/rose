@@ -9,6 +9,9 @@ Capture::Capture()
     display = XOpenDisplay(NULL);
     root = XDefaultRootWindow(display);
     visual = XDefaultVisual(display, XDefaultScreen(display));
+
+    screenshotPath = "screenshots/";
+    fileType = ".png";
 }
 
 Capture::~Capture()
