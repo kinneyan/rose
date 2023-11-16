@@ -1,13 +1,7 @@
-#include <iostream>
-#include "capture.hpp"
-#include "screenshot-area-selection.hpp"
+#include "rose.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
-    AreaSelect areaSelect;
-
-    int selection[4];
-    areaSelect.getAreaSelection(selection);
-
-    return 0;
+    Rose app;
+    return app.run(argc, argv);
 }
