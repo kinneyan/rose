@@ -40,20 +40,21 @@ void Capture::screenshotRegion(int x, int y, int w, int h)
         std::filesystem::create_directory(screenshotPath.parent_path());
     }
 
-    cairo_surface_t* surface = cairo_xlib_surface_create(display,
-                                                        root,
-                                                        visual,
-                                                        x + w,
-                                                        y + h);
+    cairo_surface_t* rawSurface = cairo_xlib_surface_create(display,
+                                                            root,
+                                                            visual,
+                                                            x + w,
+                                                            y + h);
 
-    surface = cairo_surface_create_for_rectangle(surface,
-                                                 x,
-                                                 y,
-                                                 w,
-                                                 h);
+    cairo_surface_t* surface = cairo_surface_create_for_rectangle(rawSurface,
+                                                                 x,
+                                                                 y,
+                                                                 w,
+                                                                 h);
 
     cairo_surface_write_to_png(surface, screenshotPath.string().c_str());
 
+    cairo_surface_destroy(rawSurface);
     cairo_surface_destroy(surface);
 }
 
