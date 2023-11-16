@@ -23,26 +23,26 @@ int* AreaSelect::getMousePos(int* mousePos)
 
 int* AreaSelect::formatCoords(int* coords, int* dimensions)
 {
-    if (coords[0] > coords[2])
+    if (coords[0] < coords[2])
     {
         dimensions[0] = coords[0];
-        dimensions[2] = coords[0] - coords[2];
+        dimensions[2] = coords[2] - coords[0];
     }
     else
     {
         dimensions[0] = coords[2];
-        dimensions[2] = coords[2] - coords[0];
+        dimensions[2] = coords[0] - coords[2];
     }
 
-    if (coords[1] > coords[3])
+    if (coords[1] < coords[3])
     {
         dimensions[1] = coords[1];
-        dimensions[3] = coords[1] - coords[3];
+        dimensions[3] = coords[3] - coords[1];
     }
     else
     {
         dimensions[1] = coords[3];
-        dimensions[3] = coords[3] - coords[1];
+        dimensions[3] = coords[1] - coords[3];
     }
 
     return dimensions;

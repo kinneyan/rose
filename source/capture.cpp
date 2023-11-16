@@ -7,11 +7,6 @@
 Capture::Capture()
 {
     display = XOpenDisplay(NULL);
-    if (display == NULL)
-    {
-        std::cout << "Display could not be retrieved..." << std::endl;
-        exit(1);
-    }
     root = XDefaultRootWindow(display);
     visual = XDefaultVisual(display, XDefaultScreen(display));
 }
@@ -48,8 +43,14 @@ void Capture::screenshotRegion(int x, int y, int w, int h)
     cairo_surface_t* surface = cairo_xlib_surface_create(display,
                                                         root,
                                                         visual,
-                                                        w,
-                                                        h);
+                                                        x + w,
+                                                        y + h);
+
+    surface = cairo_surface_create_for_rectangle(surface,
+                                                 x,
+                                                 y,
+                                                 w,
+                                                 h);
 
     cairo_surface_write_to_png(surface, screenshotPath.string().c_str());
 
@@ -66,22 +67,10 @@ void Capture::screenshot()
 
 void Capture::screenshot(int x, int y, int w, int h)
 {
-    XWindowChanges xwc;
-    xwc.x = x;
-    xwc.y = y;
-    xwc.width = w;
-    xwc.height = h;
-    XConfigureWindow(display, root, CWX | CWY | CWWidth | CWHeight, &xwc);
-
     screenshotRegion(x, y, w, h);
 }
 
 void Capture::screenshot(int w, int h)
 {
-    XWindowChanges xwc;
-    xwc.width = w;
-    xwc.height = h;
-    XConfigureWindow(display, root, CWWidth | CWHeight, &xwc);
-
     screenshotRegion(0, 0, w, h);
 }
