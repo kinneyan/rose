@@ -1,7 +1,5 @@
 #include "screenshot-area-selection.hpp"
 
-#include <iostream>
-
 AreaSelect::AreaSelect()
 {
     display = XOpenDisplay(NULL);
@@ -23,16 +21,42 @@ int* AreaSelect::getMousePos(int* mousePos)
     return mousePos;
 }
 
-int* AreaSelect::getAreaSelection(int* area)
+int* AreaSelect::formatCoords(int* coords, int* dimensions)
 {
-    XGrabButton(display, Button1, AnyModifier, root, true, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
+    if (coords[0] > coords[2])
+    {
+        dimensions[0] = coords[0];
+        dimensions[2] = coords[0] - coords[2];
+    }
+    else
+    {
+        dimensions[0] = coords[2];
+        dimensions[2] = coords[2] - coords[0];
+    }
 
+    if (coords[1] > coords[3])
+    {
+        dimensions[1] = coords[1];
+        dimensions[3] = coords[1] - coords[3];
+    }
+    else
+    {
+        dimensions[1] = coords[3];
+        dimensions[3] = coords[3] - coords[1];
+    }
+
+
+    return dimensions;
+}
+
+int* AreaSelect::getAreaSelection(int* dimensions)
+{
     XEvent event;
     bool buttonPressed = false;
     bool waitingForRelease = false;
+    int coords[4];
 
-    int initialX, initialY;
-    int finalX, finalY;
+    XGrabButton(display, Button1, AnyModifier, root, true, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
 
     while (!buttonPressed || waitingForRelease)
     {
@@ -47,8 +71,8 @@ int* AreaSelect::getAreaSelection(int* area)
                     waitingForRelease = true;
                     int pos[2];
                     getMousePos(pos);
-                    initialX = pos[0];
-                    initialY = pos[1];
+                    coords[0] = pos[0];
+                    coords[1] = pos[1];
                 }
                 break;
             case ButtonRelease:
@@ -57,18 +81,13 @@ int* AreaSelect::getAreaSelection(int* area)
                     waitingForRelease = false;
                     int pos[2];
                     getMousePos(pos);
-                    finalX = pos[0];
-                    finalY = pos[1];
+                    coords[2] = pos[0];
+                    coords[3] = pos[1];
                 }
             default:
                 break;
         }
     }
 
-    std::cout << '(' << initialX << ',' << initialY << ')' << '\n';
-    std::cout << '(' << finalX << ',' << finalY << ')' << '\n';
-
-    // calculate rect dimensions
-    // return rect dimensions
-
+    return formatCoords(coords, dimensions);
 }

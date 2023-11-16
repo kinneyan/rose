@@ -10,6 +10,7 @@ private:
     Window root;
 
     int* getMousePos(int* mousePos);
+    int* formatCoords(int* coords, int* dimensions);
 
 public:
     AreaSelect();
