@@ -1,9 +1,13 @@
 #include <iostream>
 #include "capture.hpp"
+#include "screenshot-area-selection.hpp"
 
 int main()
 {
-    Capture capture;
-    capture.screenshot();
+    AreaSelect areaSelect;
+
+    int selection[4];
+    areaSelect.getAreaSelection(selection);
+
     return 0;
 }
