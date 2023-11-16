@@ -45,7 +45,6 @@ int* AreaSelect::formatCoords(int* coords, int* dimensions)
         dimensions[3] = coords[3] - coords[1];
     }
 
-
     return dimensions;
 }
 
