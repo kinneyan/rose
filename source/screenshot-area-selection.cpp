@@ -1,5 +1,7 @@
 #include "screenshot-area-selection.hpp"
 
+#include <iostream>
+
 AreaSelect::AreaSelect()
 {
     display = XOpenDisplay(NULL);
@@ -23,10 +25,48 @@ int* AreaSelect::getMousePos(int* mousePos)
 
 int* AreaSelect::getAreaSelection(int* area)
 {
-    // get mouse event handler
+    XGrabButton(display, Button1, AnyModifier, root, true, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
 
-    // on mouse event mouse1 down take initial pos
-    // on mouse event mouse1 up take after pos
+    XEvent event;
+    bool buttonPressed = false;
+    bool waitingForRelease = false;
+
+    int initialX, initialY;
+    int finalX, finalY;
+
+    while (!buttonPressed || waitingForRelease)
+    {
+        XNextEvent(display, &event);
+
+        switch (event.type)
+        {
+            case ButtonPress:
+                if (event.xbutton.button == Button1 && !buttonPressed)
+                {
+                    buttonPressed = true;
+                    waitingForRelease = true;
+                    int pos[2];
+                    getMousePos(pos);
+                    initialX = pos[0];
+                    initialY = pos[1];
+                }
+                break;
+            case ButtonRelease:
+                if (event.xbutton.button == Button1 && buttonPressed)
+                {
+                    waitingForRelease = false;
+                    int pos[2];
+                    getMousePos(pos);
+                    finalX = pos[0];
+                    finalY = pos[1];
+                }
+            default:
+                break;
+        }
+    }
+
+    std::cout << '(' << initialX << ',' << initialY << ')' << '\n';
+    std::cout << '(' << finalX << ',' << finalY << ')' << '\n';
 
     // calculate rect dimensions
     // return rect dimensions
