@@ -1,5 +1,6 @@
 #include "rose.hpp"
 #include "capture.hpp"
+#include "screenshot-area-selection.hpp"
 
 #include <iostream>
 #include <unistd.h>
@@ -25,10 +26,12 @@ int Rose::run(int argc, char**argv)
 
     if (areaSelection)
     {
-        //get area selection
-        //capture.screenshot(x, y, w, h);
+        int dimensions[4];
+        AreaSelect select;
+        select.getAreaSelection(dimensions);
+        capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
-    
+
     return 0;
 }
 
