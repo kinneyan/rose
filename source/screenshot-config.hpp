@@ -2,11 +2,11 @@
 
 class ScreenshotConfig
 {
+
+private:
     bool takeFullScreenShot;
     bool takeAreaShot;
     bool uploadFile = true;
-
-private:
 
 public:
     ScreenshotConfig();
@@ -14,7 +14,7 @@ public:
     void setTakeFullScreenShot(bool fullShot);
     bool getTakeAreaShot();
     void setTakeAreaShot(bool areaShot);
-    bool getUploadFile(); 
+    bool getUploadFile();
     void setUploadFile(bool upload);
 
 };
