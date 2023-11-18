@@ -1,5 +1,7 @@
 #include "screenshot-area-selection.hpp"
 
+#include <X11/keysym.h>
+
 AreaSelect::AreaSelect()
 {
     display = XOpenDisplay(NULL);
@@ -53,11 +55,15 @@ int* AreaSelect::getAreaSelection(int* dimensions)
     XEvent event;
     bool buttonPressed = false;
     bool waitingForRelease = false;
+    bool escape = false;
     int coords[4];
 
+    // grab mouse button
     XGrabButton(display, Button1, AnyModifier, root, true, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
+    // grab escape key to cancel selection
+    XGrabKey(display, XKeysymToKeycode(display, XK_Escape), AnyModifier, root, true, GrabModeAsync, GrabModeAsync);
 
-    while (!buttonPressed || waitingForRelease)
+    while ((!buttonPressed || waitingForRelease) && !escape)
     {
         XNextEvent(display, &event);
 
@@ -83,9 +89,16 @@ int* AreaSelect::getAreaSelection(int* dimensions)
                     coords[2] = pos[0];
                     coords[3] = pos[1];
                 }
+            case KeyPress:
+                if (XLookupKeysym(&event.xkey, 0) == XK_Escape)
+                    escape = true;
+                break;
             default:
                 break;
         }
+
+        if (escape)
+            return NULL;
     }
 
     return formatCoords(coords, dimensions);
