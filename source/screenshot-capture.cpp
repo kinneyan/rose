@@ -1,4 +1,4 @@
-#include "capture.hpp"
+#include "screenshot-capture.hpp"
 
 #include <cairo-xlib.h>
 #include <iostream>

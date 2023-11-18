@@ -1,5 +1,5 @@
 #include "rose.hpp"
-#include "capture.hpp"
+#include "screenshot-capture.hpp"
 #include "screenshot-area-selection.hpp"
 
 #include <iostream>
