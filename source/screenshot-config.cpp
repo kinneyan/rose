@@ -11,8 +11,6 @@ ScreenshotConfig::ScreenshotConfig()
 
     if (!createProgramData())
         exit(1);
-    // create dot directory in home dir to store config and
-    // screenshots
 
 }
 
@@ -40,6 +38,8 @@ bool ScreenshotConfig::createProgramData()
     {
         std::filesystem::create_directory(saveDir);
     }
+
+    fileType = ".png";
 
     return true;
 }
@@ -72,4 +72,44 @@ bool ScreenshotConfig::getUploadFile()
 void ScreenshotConfig::setUploadFile(bool upload)
 {
     uploadFile = upload;
+}
+
+std::filesystem::path ScreenshotConfig::getProgramDir()
+{
+    return programDir;
+}
+
+void ScreenshotConfig::setProgramDir(std::filesystem::path dir)
+{
+    programDir = dir;
+}
+
+std::filesystem::path ScreenshotConfig::getSaveDir()
+{
+    return saveDir;
+}
+
+void ScreenshotConfig::setSaveDir(std::filesystem::path dir)
+{
+    saveDir = dir;
+}
+
+std::filesystem::path ScreenshotConfig::getFileName()
+{
+    return file;
+}
+
+void ScreenshotConfig::setFileName(std::filesystem::path name)
+{
+    file = name;
+}
+
+std::filesystem::path ScreenshotConfig::getFileType()
+{
+    return fileType;
+}
+
+void ScreenshotConfig::setFileType(std::filesystem::path type)
+{
+    fileType = type;
 }

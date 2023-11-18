@@ -17,7 +17,7 @@ int Rose::run(int argc, char**argv)
     if (readOptions(argc, argv) != 0)
         return 1;
 
-    Capture capture;
+    Capture capture(screenshotConfig.getSaveDir(), screenshotConfig.getFileType());
 
     if (screenshotConfig.getTakeFullScreenShot())
     {

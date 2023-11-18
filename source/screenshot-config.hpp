@@ -28,5 +28,13 @@ public:
     void setTakeAreaShot(bool areaShot);
     bool getUploadFile();
     void setUploadFile(bool upload);
+    std::filesystem::path getProgramDir();
+    void setProgramDir(std::filesystem::path dir);
+    std::filesystem::path getSaveDir();
+    void setSaveDir(std::filesystem::path dir);
+    std::filesystem::path getFileName();
+    void setFileName(std::filesystem::path name);
+    std::filesystem::path getFileType();
+    void setFileType(std::filesystem::path type);
 
 };

@@ -17,11 +17,10 @@ private:
     void screenshotRegion(int x, int y, int w, int h);
 
 public:
-    Capture();
+    Capture(std::filesystem::path screenshotDir, std::filesystem::path type);
     ~Capture();
 
     void screenshot();
     void screenshot(int x, int y, int w, int h);
-    void screenshot(int w, int h);
 
 };

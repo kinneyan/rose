@@ -3,14 +3,14 @@
 #include <cairo-xlib.h>
 #include <time.h>
 
-Capture::Capture()
+Capture::Capture(std::filesystem::path screenshotDir, std::filesystem::path type)
 {
     display = XOpenDisplay(NULL);
     root = XDefaultRootWindow(display);
     visual = XDefaultVisual(display, XDefaultScreen(display));
 
-    screenshotPath = "screenshots/";
-    fileType = ".png";
+    screenshotPath = screenshotDir;
+    fileType = type;
 }
 
 Capture::~Capture()
@@ -71,9 +71,4 @@ void Capture::screenshot()
 void Capture::screenshot(int x, int y, int w, int h)
 {
     screenshotRegion(x, y, w, h);
-}
-
-void Capture::screenshot(int w, int h)
-{
-    screenshotRegion(0, 0, w, h);
 }
