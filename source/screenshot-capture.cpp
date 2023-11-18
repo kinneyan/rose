@@ -1,7 +1,6 @@
 #include "screenshot-capture.hpp"
 
 #include <cairo-xlib.h>
-#include <iostream>
 #include <time.h>
 
 Capture::Capture()
