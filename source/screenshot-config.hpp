@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <libconfig.h++>
 
 class ScreenshotConfig
 {
