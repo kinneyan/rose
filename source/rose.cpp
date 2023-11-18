@@ -19,9 +19,11 @@ int Rose::run(int argc, char**argv)
 
     Capture capture(screenshotConfig.getSaveDir(), screenshotConfig.getFileType());
 
+    std::filesystem::path file;
+
     if (screenshotConfig.getTakeFullScreenShot())
     {
-        capture.screenshot();
+        file = capture.screenshot();
     }
     else if (screenshotConfig.getTakeAreaShot())
     {
@@ -29,8 +31,10 @@ int Rose::run(int argc, char**argv)
         AreaSelect select;
         if (select.getAreaSelection(dimensions) == NULL)
             return 0;
-        capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+        file = capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
+
+    screenshotConfig.setFileName(file);
 
     return 0;
 }

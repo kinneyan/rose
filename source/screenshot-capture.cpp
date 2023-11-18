@@ -33,7 +33,7 @@ void Capture::buildPath()
     screenshotPath.replace_filename(path);
 }
 
-void Capture::screenshotRegion(int x, int y, int w, int h)
+std::filesystem::path Capture::screenshotRegion(int x, int y, int w, int h)
 {
     buildPath();
 
@@ -58,17 +58,19 @@ void Capture::screenshotRegion(int x, int y, int w, int h)
 
     cairo_surface_destroy(rawSurface);
     cairo_surface_destroy(surface);
+
+    return screenshotPath;
 }
 
-void Capture::screenshot()
+std::filesystem::path Capture::screenshot()
 {
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height);
+    return screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height);
 }
 
-void Capture::screenshot(int x, int y, int w, int h)
+std::filesystem::path Capture::screenshot(int x, int y, int w, int h)
 {
-    screenshotRegion(x, y, w, h);
+    return screenshotRegion(x, y, w, h);
 }

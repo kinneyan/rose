@@ -14,13 +14,13 @@ private:
     std::filesystem::path fileType;
 
     void buildPath();
-    void screenshotRegion(int x, int y, int w, int h);
+    std::filesystem::path screenshotRegion(int x, int y, int w, int h);
 
 public:
     Capture(std::filesystem::path screenshotDir, std::filesystem::path type);
     ~Capture();
 
-    void screenshot();
-    void screenshot(int x, int y, int w, int h);
+    std::filesystem::path screenshot();
+    std::filesystem::path screenshot(int x, int y, int w, int h);
 
 };
