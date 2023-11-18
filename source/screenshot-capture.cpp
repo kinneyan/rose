@@ -37,11 +37,6 @@ std::filesystem::path Capture::screenshotRegion(int x, int y, int w, int h)
 {
     buildPath();
 
-    if (!std::filesystem::is_directory(screenshotPath.parent_path()))
-    {
-        std::filesystem::create_directory(screenshotPath.parent_path());
-    }
-
     cairo_surface_t* rawSurface = cairo_xlib_surface_create(display,
                                                             root,
                                                             visual,
