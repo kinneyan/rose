@@ -27,13 +27,19 @@ bool ScreenshotConfig::createProgramData()
     }
 
     programDir = home;
-    programDir.operator/=(std::filesystem::path(".rose"));
+    programDir.operator/=(".rose");
 
     if (!std::filesystem::is_directory(programDir))
     {
         std::filesystem::create_directory(programDir);
     }
 
+    saveDir = programDir;
+    saveDir.operator/=("screenshots/");
+    if (!std::filesystem::is_directory(saveDir))
+    {
+        std::filesystem::create_directory(saveDir);
+    }
 
     return true;
 }
