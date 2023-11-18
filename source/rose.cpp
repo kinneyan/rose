@@ -28,7 +28,8 @@ int Rose::run(int argc, char**argv)
     {
         int dimensions[4];
         AreaSelect select;
-        select.getAreaSelection(dimensions);
+        if (select.getAreaSelection(dimensions) == NULL)
+            return 1;
         capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
 
