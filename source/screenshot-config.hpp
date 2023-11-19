@@ -7,11 +7,14 @@ class ScreenshotConfig
 {
 
 private:
+    libconfig::Config config;
+
     bool takeFullScreenShot;
     bool takeAreaShot;
     bool uploadFile = true;
 
     std::filesystem::path programDir;
+    std::filesystem::path configFile;
     std::filesystem::path saveDir;
     std::filesystem::path file;
     std::filesystem::path fileType;
@@ -20,9 +23,12 @@ private:
     char* apiKey;
 
     bool createProgramData();
+    void readConfigFile();
+    void writeConfigFile();
 
 public:
     ScreenshotConfig();
+    ~ScreenshotConfig();
     bool getTakeFullScreenShot();
     void setTakeFullScreenShot(bool fullShot);
     bool getTakeAreaShot();

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <fstream>
 
 ScreenshotConfig::ScreenshotConfig()
 {
@@ -41,7 +42,35 @@ bool ScreenshotConfig::createProgramData()
 
     fileType = ".png";
 
+    configFile = programDir / "settings.cfg";
+    if (!std::filesystem::exists(configFile))
+    {
+        //create config file
+        std::ofstream settingsFile(configFile.c_str());
+        settingsFile.close();
+    }
+    else
+    {
+        readConfigFile();
+    }
+
+
     return true;
+}
+
+void ScreenshotConfig::readConfigFile()
+{
+    config.readFile(configFile.c_str());
+}
+
+void ScreenshotConfig::writeConfigFile()
+{
+    config.writeFile(configFile.c_str());
+}
+
+ScreenshotConfig::~ScreenshotConfig()
+{
+    writeConfigFile();
 }
 
 bool ScreenshotConfig::getTakeFullScreenShot()
