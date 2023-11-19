@@ -45,14 +45,10 @@ bool ScreenshotConfig::createProgramData()
     configFile = programDir / "settings.cfg";
     if (!std::filesystem::exists(configFile))
     {
-        //create config file
         std::ofstream settingsFile(configFile.c_str());
         settingsFile.close();
     }
-    else
-    {
-        readConfigFile();
-    }
+    readConfigFile();
 
 
     return true;
