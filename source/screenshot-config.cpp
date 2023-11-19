@@ -60,6 +60,21 @@ bool ScreenshotConfig::createProgramData()
 void ScreenshotConfig::readConfigFile()
 {
     config.readFile(configFile.c_str());
+
+    // read image settings
+    libconfig::Setting &root = config.getRoot();
+
+    // create any needed categories
+    if (!root.exists("upload"))
+    {
+        root.add("upload", libconfig::Setting::TypeGroup);
+    }
+
+    if (!root.exists("file"))
+    {
+        root.add("file", libconfig::Setting::TypeGroup);
+    }
+
 }
 
 void ScreenshotConfig::writeConfigFile()
