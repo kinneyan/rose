@@ -21,7 +21,7 @@ bool ScreenshotConfig::createProgramData()
     char* home = std::getenv("HOME");
     if (home == NULL)
     {
-        std::cout << "Failed to find home directory." << std::endl;
+        std::cerr << "Failed to find home directory." << std::endl;
         return false;
     }
 
