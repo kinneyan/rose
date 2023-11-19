@@ -28,7 +28,7 @@ void Capture::buildPath()
     strftime(buf, bufferSize, "ScreenshotAt-%Y-%m-%d_%H-%M-%S", localtime(&currTime));
 
     path = buf;
-    path.operator+=(fileType);
+    path+=(fileType);
 
     screenshotPath.replace_filename(path);
 }
