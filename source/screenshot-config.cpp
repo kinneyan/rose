@@ -25,6 +25,7 @@ bool ScreenshotConfig::createProgramData()
         return false;
     }
 
+    // create dot directory
     programDir = home;
     programDir.operator/=(".rose");
 
@@ -33,6 +34,7 @@ bool ScreenshotConfig::createProgramData()
         std::filesystem::create_directory(programDir);
     }
 
+    // create screenshots directory
     saveDir = programDir;
     saveDir.operator/=("screenshots/");
     if (!std::filesystem::is_directory(saveDir))
@@ -42,6 +44,7 @@ bool ScreenshotConfig::createProgramData()
 
     fileType = ".png";
 
+    // create settings config
     configFile = programDir / "settings.cfg";
     if (!std::filesystem::exists(configFile))
     {
