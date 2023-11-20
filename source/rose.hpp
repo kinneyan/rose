@@ -1,12 +1,12 @@
 #pragma once
 
+#include "screenshot-config.hpp"
+
 class Rose
 {
 
 private:
-    bool fullScreen;
-    bool areaSelection;
-    bool noUpload;
+    ScreenshotConfig screenshotConfig;
 
     int readOptions(int argc, char** argv);
 
