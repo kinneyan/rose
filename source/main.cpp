@@ -1,9 +1,7 @@
-#include <iostream>
-#include "capture.hpp"
+#include "rose.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
-    Capture capture;
-    capture.screenshot();
-    return 0;
+    Rose app;
+    return app.run(argc, argv);
 }
