@@ -11,7 +11,8 @@ private:
 
     bool takeFullScreenShot;
     bool takeAreaShot;
-    bool uploadFile = true;
+    bool uploadFile;
+    bool uploadPossible;
 
     std::filesystem::path programDir;
     std::filesystem::path configFile;
@@ -19,10 +20,11 @@ private:
     std::filesystem::path file;
     std::filesystem::path fileType;
 
-    char* host;
-    char* apiKey;
+    std::string hostURL;
+    std::string apiKey;
 
     bool createProgramData();
+    void initializeConfigFile();
     void readConfigFile();
     void writeConfigFile();
 
@@ -43,5 +45,7 @@ public:
     void setFileName(std::filesystem::path name);
     std::filesystem::path getFileType();
     void setFileType(std::filesystem::path type);
+    std::string getHostURL();
+    std::string getApiKey();
 
 };
