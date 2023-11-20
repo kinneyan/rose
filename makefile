@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = -Wall `pkg-config --cflags x11 cairo` `curl-config --cflags`
-LIBS = `pkg-config --libs x11 cairo` `curl-config --libs`
+CFLAGS = -Wall `pkg-config --cflags x11 cairo libconfig++` `curl-config --cflags`
+LIBS = `pkg-config --libs x11 cairo libconfig++` `curl-config --libs`
 SOURCES = $(wildcard source/*.cpp)
 OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
 EXECUTABLE = bin/rose

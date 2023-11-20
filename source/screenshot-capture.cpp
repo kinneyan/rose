@@ -3,14 +3,14 @@
 #include <cairo-xlib.h>
 #include <time.h>
 
-Capture::Capture()
+Capture::Capture(std::filesystem::path screenshotDir, std::filesystem::path type)
 {
     display = XOpenDisplay(NULL);
     root = XDefaultRootWindow(display);
     visual = XDefaultVisual(display, XDefaultScreen(display));
 
-    screenshotPath = "screenshots/";
-    fileType = ".png";
+    screenshotPath = screenshotDir;
+    fileType = type;
 }
 
 Capture::~Capture()
@@ -28,19 +28,14 @@ void Capture::buildPath()
     strftime(buf, bufferSize, "ScreenshotAt-%Y-%m-%d_%H-%M-%S", localtime(&currTime));
 
     path = buf;
-    path.operator+=(fileType);
+    path+=(fileType);
 
     screenshotPath.replace_filename(path);
 }
 
-void Capture::screenshotRegion(int x, int y, int w, int h)
+std::filesystem::path Capture::screenshotRegion(int x, int y, int w, int h)
 {
     buildPath();
-
-    if (!std::filesystem::is_directory(screenshotPath.parent_path()))
-    {
-        std::filesystem::create_directory(screenshotPath.parent_path());
-    }
 
     cairo_surface_t* rawSurface = cairo_xlib_surface_create(display,
                                                             root,
@@ -58,22 +53,19 @@ void Capture::screenshotRegion(int x, int y, int w, int h)
 
     cairo_surface_destroy(rawSurface);
     cairo_surface_destroy(surface);
+
+    return screenshotPath;
 }
 
-void Capture::screenshot()
+std::filesystem::path Capture::screenshot()
 {
     XWindowAttributes windowAttributes;
     XGetWindowAttributes(display, root, &windowAttributes);
 
-    screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height);
+    return screenshotRegion(0, 0, windowAttributes.width, windowAttributes.height);
 }
 
-void Capture::screenshot(int x, int y, int w, int h)
+std::filesystem::path Capture::screenshot(int x, int y, int w, int h)
 {
-    screenshotRegion(x, y, w, h);
-}
-
-void Capture::screenshot(int w, int h)
-{
-    screenshotRegion(0, 0, w, h);
+    return screenshotRegion(x, y, w, h);
 }

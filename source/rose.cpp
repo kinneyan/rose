@@ -7,9 +7,9 @@
 
 Rose::Rose()
 {
-    fullScreen = true;
-    areaSelection = false;
-    noUpload = false;
+    screenshotConfig.setTakeFullScreenShot(true);
+    screenshotConfig.setTakeAreaShot(false);
+    screenshotConfig.setUploadFile(true);
 }
 
 int Rose::run(int argc, char**argv)
@@ -17,21 +17,24 @@ int Rose::run(int argc, char**argv)
     if (readOptions(argc, argv) != 0)
         return 1;
 
-    Capture capture;
+    Capture capture(screenshotConfig.getSaveDir(), screenshotConfig.getFileType());
 
-    if (fullScreen)
+    std::filesystem::path file;
+
+    if (screenshotConfig.getTakeFullScreenShot())
     {
-        capture.screenshot();
+        file = capture.screenshot();
     }
-
-    if (areaSelection)
+    else if (screenshotConfig.getTakeAreaShot())
     {
         int dimensions[4];
         AreaSelect select;
         if (select.getAreaSelection(dimensions) == NULL)
             return 0;
-        capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+        file = capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
+
+    screenshotConfig.setFileName(file);
 
     return 0;
 }
@@ -45,15 +48,15 @@ int Rose::readOptions(int argc, char** argv)
         switch (c)
         {
             case 'f':
-                fullScreen = true;
-                areaSelection = false;
+                screenshotConfig.setTakeFullScreenShot(true);
+                screenshotConfig.setTakeAreaShot(false);
                 break;
             case 'a':
-                areaSelection = true;
-                fullScreen = false;
+                screenshotConfig.setTakeAreaShot(true);
+                screenshotConfig.setTakeFullScreenShot(false);
                 break;
             case 'l':
-                noUpload = true;
+                screenshotConfig.setUploadFile(false);
                 break;
             case '?':
                 std::cerr << "Program terminated." << std::endl;
