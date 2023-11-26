@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <libconfig.h++>
+#include <map>
 
 class ScreenshotConfig
 {
@@ -21,7 +22,7 @@ private:
     std::filesystem::path fileType;
 
     std::string hostURL;
-    std::string apiKey;
+    std::map<std::string, std::string> args;
 
     bool createProgramData();
     void initializeConfigFile();
@@ -46,6 +47,5 @@ public:
     std::filesystem::path getFileType();
     void setFileType(std::filesystem::path type);
     std::string getHostURL();
-    std::string getApiKey();
 
 };

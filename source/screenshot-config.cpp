@@ -88,10 +88,9 @@ void ScreenshotConfig::initializeConfigFile()
         host.add("url", libconfig::Setting::TypeString) = "";
     }
 
-    // check if apikey entry exists
-    if (!host.exists("api-key"))
+    if (!host.exists("arguments"))
     {
-        host.add("api-key", libconfig::Setting::TypeString) = "";
+        host.add("arguments", libconfig::Setting::TypeGroup);
     }
 
     if (!root.exists("file"))
@@ -120,7 +119,24 @@ void ScreenshotConfig::readConfigFile()
     libconfig::Setting &host = config.getRoot()["upload"]["host"];
 
     hostURL = (const char*) host.lookup("url");
-    apiKey = (const char*) host.lookup("api-key");
+
+    // read any arguments provided
+    libconfig::Setting &argsSetting = host["arguments"];
+    int i = 0;
+    bool exitNow = false;
+    while (!exitNow)
+    {
+        try
+        {
+            libconfig::Setting &setting = argsSetting[i];
+            args[setting.getName()] = (std::string) setting;
+            ++i;
+        }
+        catch (...)
+        {
+            exitNow = true;
+        }
+    }
 
     libconfig::Setting &file = config.getRoot()["file"];
     saveDir = file.lookup("save-directory");
@@ -137,10 +153,17 @@ void ScreenshotConfig::writeConfigFile()
     libconfig::Setting &url = host.lookup("url");
     url = hostURL;
 
-    // write the api-key
-    libconfig::Setting &api_key = host.lookup("api-key");
-    api_key = apiKey;
-
+    // write args
+    libconfig::Setting &argsSetting = host["arguments"];
+    for (std::map<std::string, std::string>::iterator i = args.begin(); i != args.end(); i++)
+    {
+        if (!argsSetting.exists(i->first))
+        {
+            argsSetting.add(i->first, libconfig::Setting::TypeString);
+        }
+        libconfig::Setting &setting = argsSetting.lookup(i->first);
+        setting = i->second;
+    }
 
     libconfig::Setting &file = config.getRoot()["file"];
 
@@ -233,9 +256,4 @@ void ScreenshotConfig::setFileType(std::filesystem::path type)
 std::string ScreenshotConfig::getHostURL()
 {
     return hostURL;
-}
-
-std::string ScreenshotConfig::getApiKey()
-{
-    return apiKey;
 }
