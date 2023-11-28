@@ -8,5 +8,6 @@ to the user's clipboard.
 ### Dependencies
 
 - X11
-- Cairo
+- Cairo graphics
 - Libconfig++
+- CURL
