@@ -1,6 +1,7 @@
 #include "rose.hpp"
 #include "screenshot-capture.hpp"
 #include "screenshot-area-selection.hpp"
+#include "file-upload.hpp"
 
 #include <iostream>
 #include <unistd.h>
@@ -19,7 +20,7 @@ int Rose::run(int argc, char**argv)
 
     Capture capture(screenshotConfig.getSaveDir(), screenshotConfig.getFileType());
 
-    std::filesystem::path file;
+    std::filesystem::path file = "";
 
     if (screenshotConfig.getTakeFullScreenShot())
     {
@@ -32,6 +33,17 @@ int Rose::run(int argc, char**argv)
         if (select.getAreaSelection(dimensions) == NULL)
             return 0;
         file = capture.screenshot(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+    }
+
+    if (file != "")
+    {
+        screenshotConfig.setFileName(file);
+    }
+
+    if (screenshotConfig.getUploadFile())
+    {
+        Connection host(screenshotConfig.getHostURL(), screenshotConfig.getArgs());
+        host.uploadFile(screenshotConfig.getFileName().string().c_str());
     }
 
     screenshotConfig.setFileName(file);
