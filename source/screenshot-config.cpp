@@ -39,6 +39,10 @@ bool ScreenshotConfig::createProgramData()
     {
         std::ofstream settingsFile(configFile.c_str());
         settingsFile.close();
+
+        // no host information available because we are manually creating the config file
+        // so no upload is possible
+        uploadFile = false;
     }
 
     // read config file
@@ -151,7 +155,7 @@ void ScreenshotConfig::writeConfigFile()
 
     // write the host url
     libconfig::Setting &url = host.lookup("url");
-    url = hostURL;
+    url = hostURL.c_str();
 
     // write args
     libconfig::Setting &argsSetting = host["arguments"];
@@ -256,4 +260,9 @@ void ScreenshotConfig::setFileType(std::filesystem::path type)
 std::string ScreenshotConfig::getHostURL()
 {
     return hostURL;
+}
+
+std::map<std::string, std::string> ScreenshotConfig::getArgs()
+{
+    return args;
 }

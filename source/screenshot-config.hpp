@@ -13,7 +13,6 @@ private:
     bool takeFullScreenShot;
     bool takeAreaShot;
     bool uploadFile;
-    bool uploadPossible;
 
     std::filesystem::path programDir;
     std::filesystem::path configFile;
@@ -47,5 +46,6 @@ public:
     std::filesystem::path getFileType();
     void setFileType(std::filesystem::path type);
     std::string getHostURL();
+    std::map<std::string, std::string> getArgs();
 
 };
