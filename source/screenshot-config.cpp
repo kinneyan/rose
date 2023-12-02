@@ -187,82 +187,19 @@ ScreenshotConfig::~ScreenshotConfig()
     writeConfigFile();
 }
 
-bool ScreenshotConfig::getTakeFullScreenShot()
-{
-    return takeFullScreenShot;
-}
-
-void ScreenshotConfig::setTakeFullScreenShot(bool fullShot)
-{
-    takeFullScreenShot = fullShot;
-}
-
-bool ScreenshotConfig::getTakeAreaShot()
-{
-    return takeAreaShot;
-}
-
-void ScreenshotConfig::setTakeAreaShot(bool areaShot)
-{
-    takeAreaShot = areaShot;
-}
-
-bool ScreenshotConfig::getUploadFile()
-{
-    return uploadFile;
-}
-
-void ScreenshotConfig::setUploadFile(bool upload)
-{
-    uploadFile = upload;
-}
-
-std::filesystem::path ScreenshotConfig::getProgramDir()
-{
-    return programDir;
-}
-
-void ScreenshotConfig::setProgramDir(std::filesystem::path dir)
-{
-    programDir = dir;
-}
-
-std::filesystem::path ScreenshotConfig::getSaveDir()
-{
-    return saveDir;
-}
-
-void ScreenshotConfig::setSaveDir(std::filesystem::path dir)
-{
-    saveDir = dir;
-}
-
-std::filesystem::path ScreenshotConfig::getFileName()
-{
-    return file;
-}
-
-void ScreenshotConfig::setFileName(std::filesystem::path name)
-{
-    file = name;
-}
-
-std::filesystem::path ScreenshotConfig::getFileType()
-{
-    return fileType;
-}
-
-void ScreenshotConfig::setFileType(std::filesystem::path type)
-{
-    fileType = type;
-}
-
-std::string ScreenshotConfig::getHostURL()
-{
-    return hostURL;
-}
-
-std::map<std::string, std::string> ScreenshotConfig::getArgs()
-{
-    return args;
-}
+bool ScreenshotConfig::getTakeFullScreenShot() { return takeFullScreenShot; }
+void ScreenshotConfig::setTakeFullScreenShot(bool fullShot) { takeFullScreenShot = fullShot;}
+bool ScreenshotConfig::getTakeAreaShot() { return takeAreaShot; }
+void ScreenshotConfig::setTakeAreaShot(bool areaShot) { takeAreaShot = areaShot; }
+bool ScreenshotConfig::getUploadFile() { return uploadFile; }
+void ScreenshotConfig::setUploadFile(bool upload) { uploadFile = upload; }
+std::filesystem::path ScreenshotConfig::getProgramDir() { return programDir; }
+void ScreenshotConfig::setProgramDir(std::filesystem::path dir) { programDir = dir; }
+std::filesystem::path ScreenshotConfig::getSaveDir() { return saveDir; }
+void ScreenshotConfig::setSaveDir(std::filesystem::path dir) { saveDir = dir; }
+std::filesystem::path ScreenshotConfig::getFileName() { return file; }
+void ScreenshotConfig::setFileName(std::filesystem::path name) { file = name; }
+std::filesystem::path ScreenshotConfig::getFileType() { return fileType; }
+void ScreenshotConfig::setFileType(std::filesystem::path type) { fileType = type; }
+std::string ScreenshotConfig::getHostURL() { return hostURL; }
+std::map<std::string, std::string> ScreenshotConfig::getArgs() { return args; }
